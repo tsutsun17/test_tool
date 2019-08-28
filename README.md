@@ -89,7 +89,7 @@ y
 2. ```$ open config.py```
 3. config.py
     ```
-    USERNAME = your_username,
+    USERNAME = your_username
     PASSWORD = your_password
     ```
 
