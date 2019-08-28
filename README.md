@@ -10,13 +10,13 @@
 * [コマンドライン引数](#section5)
 
 
-## <a id="section1" href="#section1">できること</a>
+## <div id="section1">できること</div>
 1. g++でコンパイルし実行。
 2. テストケースを全て試す。
 3. 自分の書いたコードの提出。
 
 
-## <a id="section2" href="#section2">例</a>
+## <div id="section2">例</div>
 ```
 ~/test_tool/code/ABC/abc131
 $ atcoder A
@@ -78,7 +78,7 @@ y
 ```
 
 
-## <a id="section3" href="#section3">ご使用前に</a>
+## <div id="section3">ご使用前に</div>
 #### gcc動作環境の構築
 [こちら](https://qiita.com/fuji_20/items/ffa2a7b4d264e7a052c6)を参考にさせていただきました。<br/>
 ```stdc++.h```を作成しておいてください。
@@ -102,7 +102,7 @@ y
 3. ```$ source ~/.bash_profile```
 
 
-## <a id="section4" href="#section4">使い方</a>
+## <div id="section4">使い方</div>
 1. __~/test_tool__ で ```$ python scraping.py``` を実行し、コンテストのトップページのURLを入力する。<br/>
     ```
     $ python scraping.py
@@ -137,7 +137,7 @@ y
 4. ```$ atcoder {LEVEL} [-wt] [-s] [-h]```
     > ```$ atcoder A -wt```
 
-## <a id="section5" href="#section5">コマンドライン引数</a>
+## <div id="section5">コマンドライン引数</div>
 ```$ atcoder {LEVEL} [-wt] [-s] [-h]```
 #### LEVEL (必須)
   問題の難易度(A, B, C, Dなど)を指定。
