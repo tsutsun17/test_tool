@@ -83,16 +83,16 @@ def test_result(level):
         ac_count = 0
 
         for i in range(1, file_number+1):
-            with open(test_path + '/in/{0}.txt'.format(i), "r") as f_in, open(test_path + '/out/{0}.txt'.format(i), "r") as f_out:
-                # コードの実行
-                ret = subprocess.check_output(['./{0}'.format(level)], stdin=f_in)
-                ret = ret.decode('utf-8')
-
-                # subprocessでf_inを読み込んでからread()をする
+            with open(test_path + '/in/{0}.txt'.format(i), "r") as f_in:
                 s_in = f_in.read()
                 print('[{0}]'.format(i))
                 print("(入力)")
                 print(s_in)
+
+            with open(test_path + '/in/{0}.txt'.format(i), "r") as f_in, open(test_path + '/out/{0}.txt'.format(i), "r") as f_out:
+                # コードの実行
+                ret = subprocess.check_output(['./{0}'.format(level)], stdin=f_in)
+                ret = ret.decode('utf-8')
 
                 print("(実際の出力)")
                 print(ret)
