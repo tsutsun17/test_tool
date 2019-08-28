@@ -1,6 +1,5 @@
 import os
 import subprocess
-import requests
 import argparse
 
 from login import can_login
