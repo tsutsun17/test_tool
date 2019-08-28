@@ -2,22 +2,92 @@
 
 これはc++用のatcoderの自動テストツールです。
 
-## できること
+## 目次
+* [できること](#section1)
+* [例](#section2)
+* [ご使用前に](#section3)
+* [使い方](#section4)
+* [コマンドライン引数](#section5)
+
+
+## <a id="section1" href="#section1">できること</a>
 1. g++でコンパイルし実行。
 2. テストケースを全て試す。
 3. 自分の書いたコードの提出。
 
 
-## 例
+## <a id="section2" href="#section2">例</a>
+```
+~/test_tool/code/ABC/abc131
+$ atcoder A
+[1]
+(入力)
+3776
+
+(実際の出力)
+Bad
+
+(理想の出力)
+Bad
+
+---------- OK ----------
+[2]
+(入力)
+8080
+
+(実際の出力)
+Good
+
+(理想の出力)
+Good
+
+---------- OK ----------
+[3]
+(入力)
+1333
+
+(実際の出力)
+Bad
+
+(理想の出力)
+Bad
+
+---------- OK ----------
+[4]
+(入力)
+0024
+
+(実際の出力)
+Bad
+
+(理想の出力)
+Bad
+
+---------- OK ----------
 
 
-## ご使用前に
+
+提出しますか？(y/n)
+y
+
+
+
+----- 提出が完了しました!!!!!!!!!!!!!　-----
+----- 速やかに処理を終了します。 -----
+
+```
+
+
+## <a id="section3" href="#section3">ご使用前に</a>
 #### gcc動作環境の構築
-
+[こちら](https://qiita.com/fuji_20/items/ffa2a7b4d264e7a052c6)を参考にさせていただきました。<br/>
+```stdc++.h```を作成しておいてください。
+ 
 
 #### config.pyの作成
 1. ```$ touch config.py```
-2. config.py
+2. ```$ open config.py```
+3. config.py
     ```
     USERNAME = your_username,
     PASSWORD = your_password
@@ -32,9 +102,33 @@
 3. ```$ source ~/.bash_profile```
 
 
-## 使い方
+## <a id="section4" href="#section4">使い方</a>
 1. __~/test_tool__ で ```$ python scraping.py``` を実行し、コンテストのトップページのURLを入力する。<br/>
-ここで画像を追加
+    ```
+    $ python scraping.py
+
+
+    ----------------------------------
+    |    atcoderの準備を開始します。 |
+    ----------------------------------
+
+
+    ------  コンテストのURLを入力してください。------
+    url: https://atcoder.jp/contests/abc131
+
+
+    ------ 問題を取ってきています。 ------
+
+    ------ 少々お待ちください。    ------
+
+    処理が完了しました。
+    code/ABC/abc131 に移動し
+    問題にとりかかってください。
+
+    ----------------------------------
+
+
+    ```
 
 2. ```$ cd  code/{CONTEST_CATEGORY}/{CONTEST_NAME}```
     > ```$ cd code/ABC/abc132```
@@ -43,7 +137,7 @@
 4. ```$ atcoder {LEVEL} [-wt] [-s] [-h]```
     > ```$ atcoder A -wt```
 
-## コマンドライン引数
+## <a id="section5" href="#section5">コマンドライン引数</a>
 ```$ atcoder {LEVEL} [-wt] [-s] [-h]```
 #### LEVEL (必須)
   問題の難易度(A, B, C, Dなど)を指定。
@@ -53,5 +147,20 @@
   
 #### -s (--submit)
   テストケースを全てACした時、__-wt__ オプション時に強制的に提出する。
+
+```
+$ atcoder -h
+usage: atcoder [-h] [-wt] [-s] level
+
+atcoder用のc++のコンパイルと実行の簡略化と自動テストと提出
+
+positional arguments:
+  level                A, B, C, D, E, Fなどの問題のレベル(大文字で)
+
+optional arguments:
+  -h, --help           show this help message and exit
+  -wt, --without_test  テストケースを通さず、自分で入力をする
+  -s, --submit         提出の許可をいちいち取らない
+```
   
   
