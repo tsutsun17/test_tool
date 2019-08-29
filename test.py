@@ -31,8 +31,9 @@ def main():
     submit = args.submit
 
     # コンパイル
-    subprocess.call(["g++", "-o", level, '{0}.cpp'.format(level)])
-
+    if subprocess.call(["g++", "-o", level, '{0}.cpp'.format(level)]):
+        print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+        return ""
     # 自動テスト or 手動テスト
     if wt:
         print("(入力)")
@@ -45,25 +46,22 @@ def main():
 
     # 提出するかどうか
     if not can_submit:
-        print("\n\n")
-        print("----- 処理を終了します -----")
+        print("\n")
         return ""
     if not submit:
         do_submit = submit_ques()
         if not do_submit:
-            print("----- 提出はしません。 -----")
-            print("----- 処理を終了します。 -----")
+            print("提出はしません。")
             return ""
 
-    print("\n\n")
+    print("\n")
     code_submit(level, contest_name)
     return ""
 
 # 提出するかどうかの質問
 def submit_ques():
     for i in range(3):
-        print("\n\n")
-        print("提出しますか？(y/n)")
+        print("\n提出しますか？(y/n)")
         do_submit = input()
         if do_submit == "y":
             return True
@@ -71,7 +69,7 @@ def submit_ques():
             return False
         else:
             if i < 2:
-                print("----- yかnを入力してください -----")
+                print("yかnを入力してください。")
     return False
 
 # 自動テスト処理
@@ -84,7 +82,7 @@ def test_result(level):
         for i in range(1, file_number+1):
             with open(test_path + '/in/{0}.txt'.format(i), "r") as f_in:
                 s_in = f_in.read()
-                print('[{0}]'.format(i))
+                print('\n[{0}]'.format(i))
                 print("(入力)")
                 print(s_in)
 
@@ -117,8 +115,8 @@ def test_result(level):
 def code_submit(level, contest_name):
     session, csrf_token = can_login()
     if not session:
-        print("------  ログインに失敗しました。   ------")
-        return print("------  速やかに処理を終了します。 ------")
+        print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+        return print("ログインに失敗しました。")
     else:
         url = BASE_URL + '{0}/submit'.format(contest_name)
         task_name = '{0}_{1}'.format(contest_name, level.lower())
@@ -136,12 +134,10 @@ def code_submit(level, contest_name):
             result.raise_for_status()
 
             if result.status_code == 200:
-                print("----- 提出が完了しました!!!!!!!!!!!!!　-----")
-                print("----- 速やかに処理を終了します。 -----")
+                print("提出が完了しました!!!!!!!")
             else:
-                print("----- 提出に失敗しました。。。 -----")
-                print("----- 速やかに処理を終了します。 -----")
-
+                print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+                print("提出に失敗しました。。。")
         return ""
 
 if __name__ == "__main__":

@@ -11,31 +11,24 @@ CATEGORY = ["ABC", "ARC", "AGC", "Others"]
 def main():
     print("\n")
     print("----------------------------------")
-    print("|    atcoderの準備を開始します。 |")
-    print("----------------------------------")
-    print("\n")
-    print("------  コンテストのURLを入力してください。------")
+    print("|    atcoderの準備を開始します。  |")
+    print("---------------------------------- \n")
+    print("コンテストのURLを入力してください。")
     print("url: ", end="")
     BASE_URL = input() + "/tasks"
     print("\n")
 
     session, _ = can_login()
     if not session:
-        print("------  ログインに失敗しました。   ------")
-        return print("------  速やかに処理を終了します。 ------")
+        print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+        return print("ログインに失敗しました。")
     else:
-        print("------ 問題を取ってきています。 ------")
-        print("")
-        print("------ 少々お待ちください。    ------")
-        print("")
+        print("少々お待ちください。\n")
         if get_testcases(BASE_URL, session):
-            print("問題にとりかかってください。")
-            print("")
-            return print("----------------------------------")
+            return print("問題にとりかかってください。\n")
         else:
-            print("----------------------------------")
-            print("エラーが発生しました。")
-            return print("------  速やかに処理を終了します。 ------")
+            print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+            return print("エラーが発生しました。")
 
 # カテゴリ分け
 def get_category(contest_name):
@@ -98,8 +91,7 @@ def get_testcases(base_url, session):
                 with open('./code/{0}/{1}/test/{2}/out/{3}.txt'.format(category, contest_name, name, index+1), 'w') as f:
                     f.write(sample.text)
 
-        print("処理が完了しました。")
-        print('code/{0}/{1} に移動し'.format(category, contest_name))
+        print('cd code/{0}/{1}'.format(category, contest_name))
         return True
     except Exception as e:
         print(e)
