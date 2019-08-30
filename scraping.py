@@ -3,16 +3,27 @@ import re
 import subprocess
 import requests
 from bs4 import BeautifulSoup
+from tqdm import tqdm
 from login import can_login
 
 BASE_CODE = "#include <bits/stdc++.h>\nusing namespace std;\ntypedef long long ll;\n\nint main() {\n    \n    return 0;\n}"
 CATEGORY = ["ABC", "ARC", "AGC", "Others"]
 
 def main():
-    print("\n")
-    print("----------------------------------")
-    print("|    atcoderの準備を開始します。  |")
-    print("---------------------------------- \n")
+    print("     ___   .___________.  ______   ______    _______   _______ .______")
+    print("    /   \  |           | /      | /  __  \  |       \ |   ____||   _  \ ")
+    print("   /  ^  \ `---|  |----`|  ,----'|  |  |  | |  .--.  ||  |__   |  |_)  |")
+    print("  /  /_\  \    |  |     |  |     |  |  |  | |  |  |  ||   __|  |      / ")
+    print(" /  _____  \   |  |     |  `----.|  `--'  | |  '--'  ||  |____ |  |\  \----.")
+    print("/__/     \__\  |__|      \______| \______/  |_______/ |_______|| _| `._____|")
+    print("")
+    print("                  .___________. _______     _______.___________.")
+    print("                  |           ||   ____|   /       |           |")
+    print("            ______`---|  |----`|  |__     |   (----`---|  |----`")
+    print("           |______|   |  |     |   __|     \   \       |  |")
+    print("                      |  |     |  |____.----)   |      |  |")
+    print("                      |__|     |_______|_______/       |__|")
+    print("")
     print("コンテストのURLを入力してください。")
     print("url: ", end="")
     BASE_URL = input() + "/tasks"
@@ -71,7 +82,7 @@ def get_testcases(base_url, session):
             with open('./code/{0}/{1}/{2}.cpp'.format(category, contest_name, name), 'w') as f:
                 f.write(BASE_CODE)
 
-        for link in problem_links:
+        for link in tqdm(problem_links):
             name = link.text
             link = link.get("href")
             
