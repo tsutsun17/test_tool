@@ -31,7 +31,7 @@ def main():
     submit = args.submit
 
     # コンパイル
-    if subprocess.call(["g++", "-o", level, '{0}.cpp'.format(level)]):
+    if subprocess.call(["g++", "-std=c++14", "-o", level, '{0}.cpp'.format(level)]):
         print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
         return ""
     # 自動テスト or 手動テスト
