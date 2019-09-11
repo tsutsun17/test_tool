@@ -119,7 +119,18 @@ def code_submit(level, contest_name):
         return print("ログインに失敗しました。")
     else:
         url = BASE_URL + '{0}/submit'.format(contest_name)
-        task_name = '{0}_{1}'.format(contest_name, level.lower())
+        if not "arc" in contest_name:
+            task_name = '{0}_{1}'.format(contest_name, level.lower())
+        elif int(contest_name[3:]) >= 58:
+            if level=="C":
+                newlevel = "A"
+            elif level=="D":
+                newlevel = "B"
+            elif level=="E":
+                newlevel = "C"
+            else:
+                newlevel = "D"
+            task_name = '{0}_{1}'.format(contest_name, newlevel.lower())
 
         with open('{0}.cpp'.format(level), "r") as f:
             source_code = f.read()
