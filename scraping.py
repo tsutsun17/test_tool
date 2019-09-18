@@ -26,8 +26,19 @@ def main():
     print("")
     print("コンテストのURLを入力してください。")
     print("url: ", end="")
-    BASE_URL = input() + "/tasks"
+    BASE_URL = input()
+    if BASE_URL[-1]=='/':
+        BASE_URL = BASE_URL[:-1]
+    BASE_URL += "/tasks"
     print("\n")
+
+    contest_name = BASE_URL.split("/")[4]
+    contest_category_no = get_category(contest_name)
+    category = CATEGORY[contest_category_no]
+
+    if os.path.isdir('./code/{0}/{1}'.format(category, contest_name)):
+        print("すでに存在しています。")
+        return print("cd code/{0}/{1}".format(category, contest_name))
 
     session, _ = can_login()
     if not session:
@@ -35,7 +46,8 @@ def main():
         return print("ログインに失敗しました。")
     else:
         print("少々お待ちください。\n")
-        if get_testcases(BASE_URL, session):
+        if get_testcases(BASE_URL, session, contest_name, category):
+            print('cd code/{0}/{1}'.format(category, contest_name))
             return print("問題にとりかかってください。\n")
         else:
             print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
@@ -54,12 +66,8 @@ def get_category(contest_name):
         return 3
 
 # テストケースの取得
-def get_testcases(base_url, session):
+def get_testcases(base_url, session, contest_name, category):
     try:
-        contest_name = base_url.split("/")[4]
-        contest_category_no = get_category(contest_name)
-        category = CATEGORY[contest_category_no]
-
         response = session.get(base_url)
         soup = BeautifulSoup(response.text, "lxml")
         tbody = soup.find_all("tr")
@@ -102,7 +110,6 @@ def get_testcases(base_url, session):
                 with open('./code/{0}/{1}/test/{2}/out/{3}.txt'.format(category, contest_name, name, index+1), 'w') as f:
                     f.write(sample.text)
 
-        print('cd code/{0}/{1}'.format(category, contest_name))
         return True
     except Exception as e:
         print(e)
