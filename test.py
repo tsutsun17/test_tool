@@ -1,10 +1,12 @@
 import os
 import subprocess
 import argparse
+from bs4 import BeautifulSoup
+from time import sleep
 
 from login import can_login
 
-# 引数: python test.py AとかBとか[大文字で] 
+# 引数: python test.py AとかBとか[大文字で]
 # - --help
 # - 何もなしだったら、コンパイルして実行　かつ　テストケースを通す (全てACだったら、提出するかをy/nで尋ねる)
 # - -wt : コンパイルして実行のみ (提出するかをy/nで尋ねる)
@@ -146,10 +148,30 @@ def code_submit(level, contest_name):
 
             if result.status_code == 200:
                 print("提出が完了しました!!!!!!!")
+                confirm_AC(contest_name, level)
             else:
                 print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
                 print("提出に失敗しました。。。")
         return ""
+
+# AC判定
+def confirm_AC(contest_name, level):
+    session, csrf_token = can_login()
+    while True:
+        response = session.get('https://atcoder.jp/contests/{}/submissions/me'.format(contest_name))
+        soup = BeautifulSoup(response.text, 'lxml')
+        opt = soup.find_all(class_='label')[0].get('title')
+        if opt == "Waiting for Judging" or opt == "Judging":
+            sleep(1)
+        else:
+            if opt=="Accepted":
+                os.system("osascript -e 'display notification \"{0}\" with title \"{1}問題\" sound name \"default\"'".format(opt, level))
+                print("AC!!")
+            else:
+                os.system("osascript -e 'display dialog \"{0}\" buttons \"OK\" default button 1 with icon caution with title \"{1}\"'".format(opt,level))
+                print("{}".format(opt))
+            break
+        sleep(1)
 
 if __name__ == "__main__":
     main()
