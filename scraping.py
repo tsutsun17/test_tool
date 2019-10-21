@@ -6,17 +6,10 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 from login import can_login
 
-BASE_CODE = "#include <bits/stdc++.h>\nusing namespace std;\ntypedef long long ll;\n\nint main() {\n    \n    return 0;\n}"
+BASE_CODE = "#include <bits/stdc++.h>\n#define rep(i, n) for(int i=0; i<(n); ++i)\n#define chmin(x,y) x = min(x,y)\nusing namespace std;\ntypedef long long ll;\nconst int INF = 1001001001;\n\nint main() {\n    \n    return 0;\n}"
 CATEGORY = ["ABC", "ARC", "AGC", "Others"]
 
 def main():
-    print("     ___   .___________.  ______   ______    _______   _______ .______               ")
-    print("    /   \  |           | /      | /  __  \  |       \ |   ____||   _  \              ")
-    print("   /  ^  \ `---|  |----`|  ,----'|  |  |  | |  .--.  ||  |__   |  |_)  |             ")
-    print("  /  /_\  \    |  |     |  |     |  |  |  | |  |  |  ||   __|  |      /              ")
-    print(" /  _____  \   |  |     |  `----.|  `--'  | |  '--'  ||  |____ |  |\  \----.         ")
-    print("/__/     \__\  |__|      \______| \______/  |_______/ |_______|| _| `._____|         ")
-    print("                                                                                     ")
     print("               .___________. _______     _______.___________.                        ")
     print("               |           ||   ____|   /       |           |                        ")
     print("               `---|  |----`|  |__     |   (----`---|  |----`                        ")
@@ -93,7 +86,7 @@ def get_testcases(base_url, session, contest_name, category):
         for link in tqdm(problem_links):
             name = link.text
             link = link.get("href")
-            
+
             response = session.get("https://atcoder.jp" + link)
             soup = BeautifulSoup(response.text, "lxml")
             lang_ja = soup.find("span", class_="lang-ja")
