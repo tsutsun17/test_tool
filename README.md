@@ -120,7 +120,7 @@ y
   テストケースを全てACした時、__-wt__ オプション時に強制的に提出する。
 
 ```
-$ atcoder -h
+$ ttest -h
 usage: ttest [-h] [-wt] [-s] level
 
 atcoder用のc++のコンパイルと実行の簡略化と自動テストと提出
