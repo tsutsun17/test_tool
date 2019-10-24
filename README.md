@@ -19,7 +19,7 @@
 ## <div id="section2">例</div>
 ```
 ~/test_tool/code/ABC/abc129
-$ atcoder A
+$ ttest A
 
 [1]
 (入力)
@@ -72,7 +72,7 @@ y
 1. ```$ open ~/.bash_profile```
 2. bash_profile
     ```
-    alias atcoder="python ../../../test.py"
+    alias ttest="python ../../../test.py"
     ```
 3. ```$ source ~/.bash_profile```
 
@@ -81,12 +81,6 @@ y
 1. __~/test_tool__ で ```$ python scraping.py``` を実行し、コンテストのトップページのURLを入力する。<br/>
     ```
     $ python scraping.py
-         ___   .___________.  ______   ______    _______   _______ .______               
-        /   \  |           | /      | /  __  \  |       \ |   ____||   _  \              
-       /  ^  \ `---|  |----`|  ,----'|  |  |  | |  .--.  ||  |__   |  |_)  |             
-      /  /_\  \    |  |     |  |     |  |  |  | |  |  |  ||   __|  |      /              
-     /  _____  \   |  |     |  `----.|  `--'  | |  '--'  ||  |____ |  |\  \----.         
-    /__/     \__\  |__|      \______| \______/  |_______/ |_______|| _| `._____|         
                                                                                          
                    .___________. _______     _______.___________.                        
                    |           ||   ____|   /       |           |                        
@@ -111,11 +105,11 @@ y
     > ```$ cd code/ABC/abc132```
     
 3. 必死こいてコードを書く。
-4. ```$ atcoder {LEVEL} [-wt] [-s] [-h]```
+4. ```$ ttest {LEVEL} [-wt] [-s] [-h]```
     > ```$ atcoder A -wt```
 
 ## <div id="section5">コマンドライン引数</div>
-```$ atcoder {LEVEL} [-wt] [-s] [-h]```
+```$ ttest {LEVEL} [-wt] [-s] [-h]```
 #### LEVEL (必須)
   問題の難易度(A, B, C, Dなど)を指定。
   
@@ -126,8 +120,8 @@ y
   テストケースを全てACした時、__-wt__ オプション時に強制的に提出する。
 
 ```
-$ atcoder -h
-usage: atcoder [-h] [-wt] [-s] level
+$ ttest -h
+usage: ttest [-h] [-wt] [-s] level
 
 atcoder用のc++のコンパイルと実行の簡略化と自動テストと提出
 
