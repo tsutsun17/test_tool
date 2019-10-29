@@ -143,6 +143,7 @@ def code_submit(level, contest_name):
                 "sourceCode": source_code,
                 "csrf_token": csrf_token
             }
+            # abc019以前は task_name が abc019_1　とかになっている
             result = session.post(url, data=submit_info)
             result.raise_for_status()
 

@@ -82,7 +82,7 @@ def get_testcases(base_url, session, contest_name, category):
             # 問題ごとにファイルを作成
             with open('./code/{0}/{1}/{2}.cpp'.format(category, contest_name, name), 'w') as f:
                 f.write(BASE_CODE)
-
+        # ABC017以降に対応
         for link in tqdm(problem_links):
             name = link.text
             link = link.get("href")
