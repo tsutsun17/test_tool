@@ -93,5 +93,6 @@
         "*.tcc": "cpp",
         "cuchar": "cpp",
         "memory_resource": "cpp"
-    }
+    },
+    "python.pythonPath": "/Users/itoutatsuhiko/.pyenv/versions/3.7.4/bin/python"
 }

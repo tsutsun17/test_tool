@@ -1,12 +1,10 @@
 import os
-import re
-import subprocess
 import requests
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 from login import can_login
 
-BASE_CODE = "#include <bits/stdc++.h>\n#define rep(i, n) for(int i=0; i<(n); ++i)\n#define chmin(x,y) x = min(x,y)\n#define chmax(x,y) x = max(x,y)\nusing namespace std;\ntypedef long long ll;\nconst int inf = INT_MAX;\nconst ll INF = 1LL >> 60;\nconst ll mod = 1e9+7;\n\nint main() {\n    \n    return 0;\n}"
+BASE_CODE = "#include <bits/stdc++.h>\n#define rep(i, n) for(int i=0; i<(n); ++i)\n#define chmin(x,y) x = min(x,y)\n#define chmax(x,y) x = max(x,y)\nusing namespace std;\nusing Graph = vector<vector<int>>;\ntypedef long long ll;\nconst int inf = INT_MAX;\nconst ll INF = 1LL << 60;\nconst ll mod = 1e9+7;\n\nint main() {\n    \n    return 0;\n}"
 CATEGORY = ["ABC", "ARC", "AGC", "Others"]
 
 def main():

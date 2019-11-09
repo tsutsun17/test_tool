@@ -133,7 +133,7 @@ def code_submit(level, contest_name):
             else:
                 newlevel = "D"
             task_name = '{0}_{1}'.format(contest_name, newlevel.lower())
-
+        task_name = task_name.replace("-", "_")
         with open('{0}.cpp'.format(level), "r") as f:
             source_code = f.read()
 
