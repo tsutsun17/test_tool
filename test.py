@@ -35,7 +35,7 @@ def main():
     # コンパイル
     if subprocess.call(["g++", "-std=c++14", "-o", level, '{0}.cpp'.format(level)]):
         print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
-        return ""
+        return
     # 自動テスト or 手動テスト
     if wt:
         print("(入力)")
@@ -49,16 +49,16 @@ def main():
     # 提出するかどうか
     if not can_submit:
         print("\n")
-        return ""
+        return
     if not submit:
         do_submit = submit_ques()
         if not do_submit:
             print("提出はしません。")
-            return ""
+            return
 
     print("\n")
     code_submit(level, contest_name)
-    return ""
+    return
 
 # 提出するかどうかの質問
 def submit_ques():
@@ -105,55 +105,63 @@ def test_result(level):
                     ac_count += 1
                 else:
                     print("^^^^^^^^^^ NG ^^^^^^^^^^")
-        if ac_count == file_number:
-            return True
-        else:
-            return False
+
+        return ac_count == file_number
     except Exception as e:
         print(e)
         return False
+
+def set_level(level):
+    if level=="C":
+        newlevel = "A"
+    elif level=="D":
+        newlevel = "B"
+    elif level=="E":
+        newlevel = "C"
+    else:
+        newlevel = "D"
+
+    return newlevel
 
 # コードの提出処理
 def code_submit(level, contest_name):
     session, csrf_token = can_login()
     if not session:
         print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
-        return print("ログインに失敗しました。")
-    else:
-        url = BASE_URL + '{0}/submit'.format(contest_name)
-        if not "arc" in contest_name:
-            task_name = '{0}_{1}'.format(contest_name, level.lower())
-        elif int(contest_name[3:]) >= 58:
-            if level=="C":
-                newlevel = "A"
-            elif level=="D":
-                newlevel = "B"
-            elif level=="E":
-                newlevel = "C"
-            else:
-                newlevel = "D"
-            task_name = '{0}_{1}'.format(contest_name, newlevel.lower())
-        task_name = task_name.replace("-", "_")
-        with open('{0}.cpp'.format(level), "r") as f:
-            source_code = f.read()
+        print("ログインに失敗しました。")
+        return
 
-            submit_info = {
-                "data.TaskScreenName": task_name,
-                "data.LanguageId": 3003,
-                "sourceCode": source_code,
-                "csrf_token": csrf_token
-            }
-            # abc019以前は task_name が abc019_1　とかになっている
-            result = session.post(url, data=submit_info)
-            result.raise_for_status()
+    url = BASE_URL + '{0}/submit'.format(contest_name)
 
-            if result.status_code == 200:
-                print("提出が完了しました!!!!!!!")
-                confirm_AC(contest_name, level)
-            else:
-                print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
-                print("提出に失敗しました。。。")
-        return ""
+    # ARCのsubmission問題
+    newlevel = level
+    if "arc" in contest_name and int(contest_name[3:]) >= 58:
+        newlevel = set_level(level)
+
+    task_name = '{0}_{1}'.format(contest_name, newlevel.lower())
+    task_name = task_name.replace("-", "_")
+
+    with open('{0}.cpp'.format(level), "r") as f:
+        source_code = f.read()
+
+        submit_info = {
+            "data.TaskScreenName": task_name,
+            "data.LanguageId": 3003,
+            "sourceCode": source_code,
+            "csrf_token": csrf_token
+        }
+        # abc019以前は task_name が abc019_1　とかになっている
+        result = session.post(url, data=submit_info)
+        result.raise_for_status()
+
+    if result.status_code != 200:
+        print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+        print("提出に失敗しました。。。")
+        return
+
+    print("提出が完了しました!!!!!!!")
+    confirm_AC(contest_name, level)
+    return
 
 # AC判定
 def confirm_AC(contest_name, level):

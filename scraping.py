@@ -3,24 +3,19 @@ import requests
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 from login import can_login
+from title import title
 
-BASE_CODE = "#include <bits/stdc++.h>\n#define rep(i, n) for(int i=0; i<(n); ++i)\n#define chmin(x,y) x = min(x,y)\n#define chmax(x,y) x = max(x,y)\nusing namespace std;\nusing Graph = vector<vector<int>>;\ntypedef long long ll;\nconst int inf = INT_MAX;\nconst ll INF = 1LL << 60;\nconst ll mod = 1e9+7;\n\nint main() {\n    \n    return 0;\n}"
+BASE_CODE = "#include <bits/stdc++.h>\n#define rep(i, n) for(int i=0; i<(n); ++i)\n#define chmin(x,y) x = min(x,y)\n#define chmax(x,y) x = max(x,y)\nusing namespace std;\ntypedef long long ll;\ntypedef pair<int, int> P; \nconst int inf = 1<<21;\nconst ll INF = 1LL << 60;\nconst ll mod = 1e9+7;\n\nint main() {\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\n    return 0;\n}"
 CATEGORY = ["ABC", "ARC", "AGC", "Others"]
 
 def main():
-    print("               .___________. _______     _______.___________.                        ")
-    print("               |           ||   ____|   /       |           |                        ")
-    print("               `---|  |----`|  |__     |   (----`---|  |----`                        ")
-    print("                   |  |     |   __|     \   \       |  |                             ")
-    print("                   |  |     |  |____.----)   |      |  |                             ")
-    print("                   |__|     |_______|_______/       |__|                             ")
-    print("")
+    title()
     print("コンテストのURLを入力してください。")
     print("url: ", end="")
-    BASE_URL = input()
-    if BASE_URL[-1]=='/':
-        BASE_URL = BASE_URL[:-1]
-    BASE_URL += "/tasks"
+
+    tmp_url = input()
+    BASE_URL = tmp_url[:-1] + "/tasks" if tmp_url[-1]=='/' else tmp_url + "/tasks"
+
     print("\n")
 
     contest_name = BASE_URL.split("/")[4]
@@ -29,20 +24,25 @@ def main():
 
     if os.path.isdir('./code/{0}/{1}'.format(category, contest_name)):
         print("すでに存在しています。")
-        return print("cd code/{0}/{1}".format(category, contest_name))
+        print("cd code/{0}/{1}".format(category, contest_name))
+        return
 
     session, _ = can_login()
     if not session:
         print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
-        return print("ログインに失敗しました。")
-    else:
-        print("少々お待ちください。\n")
-        if get_testcases(BASE_URL, session, contest_name, category):
-            print('cd code/{0}/{1}'.format(category, contest_name))
-            return print("問題にとりかかってください。\n")
-        else:
-            print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
-            return print("エラーが発生しました。")
+        print("ログインに失敗しました。")
+        return
+
+    print("少々お待ちください。\n")
+
+    if get_testcases(BASE_URL, session, contest_name, category):
+        print('cd code/{0}/{1}'.format(category, contest_name))
+        print("問題にとりかかってください。\n")
+        return
+
+    print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+    print("エラーが発生しました。")
+    return
 
 # カテゴリ分け
 def get_category(contest_name):
@@ -80,6 +80,7 @@ def get_testcases(base_url, session, contest_name, category):
             # 問題ごとにファイルを作成
             with open('./code/{0}/{1}/{2}.cpp'.format(category, contest_name, name), 'w') as f:
                 f.write(BASE_CODE)
+
         # ABC017以降に対応
         for link in tqdm(problem_links):
             name = link.text
@@ -102,6 +103,7 @@ def get_testcases(base_url, session, contest_name, category):
                     f.write(sample.text)
 
         return True
+
     except Exception as e:
         print(e)
         return False
