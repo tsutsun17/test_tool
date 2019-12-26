@@ -105,7 +105,7 @@ def get_testcases(base_url, session, contest_name, category):
         return True
 
     except Exception as e:
-        print(e)
+        Exception("failed scraping")
         return False
 
 if __name__ == "__main__":

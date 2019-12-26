@@ -14,6 +14,8 @@ from login import can_login
 
 BASE_URL="https://atcoder.jp/contests/"
 
+# 困ったときは '$ lldb -f ./out'
+
 def main():
     pwd = os.getcwd()
     category, contest_name = pwd.split("/")[-2:]
@@ -33,7 +35,7 @@ def main():
     submit = args.submit
 
     # コンパイル
-    if subprocess.call(["g++", "-std=c++14", "-o", level, '{0}.cpp'.format(level)]):
+    if subprocess.call(["g++", "-std=c++14", "-g", "-o", level, '{0}.cpp'.format(level)]):
         print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
         return
     # 自動テスト or 手動テスト
@@ -87,7 +89,6 @@ def test_result(level):
                 print('\n[{0}]'.format(i))
                 print("(入力)")
                 print(s_in)
-
             with open(test_path + '/in/{0}.txt'.format(i), "r") as f_in, open(test_path + '/out/{0}.txt'.format(i), "r") as f_out:
                 # コードの実行
                 ret = subprocess.check_output(['./{0}'.format(level)], stdin=f_in)
@@ -108,7 +109,7 @@ def test_result(level):
 
         return ac_count == file_number
     except Exception as e:
-        print(e)
+        Exception("failed Test")
         return False
 
 def set_level(level):
@@ -137,6 +138,7 @@ def code_submit(level, contest_name):
     newlevel = level
     if "arc" in contest_name and int(contest_name[3:]) >= 58:
         newlevel = set_level(level)
+    # ABCのsubmission問題もある
 
     task_name = '{0}_{1}'.format(contest_name, newlevel.lower())
     task_name = task_name.replace("-", "_")
@@ -153,6 +155,7 @@ def code_submit(level, contest_name):
         # abc019以前は task_name が abc019_1　とかになっている
         result = session.post(url, data=submit_info)
         result.raise_for_status()
+    print(task_name)
 
     if result.status_code != 200:
         print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
